@@ -2,7 +2,7 @@ import React from 'react';
 import { MoreHorizontal, Plus } from 'react-feather';
 import Card from './Card';
 import '../css/Board.css';
-import users from '../user';
+import { users } from '../content';
 import { statusIcons, priorityIcons, userIcons } from './icon';
 
 function Board({ status, tickets }) {
@@ -46,15 +46,18 @@ function Board({ status, tickets }) {
         </p>
       </div>
       <div className='board_cards'>
-        {tickets.map((ticket) => (
-          <Card
-            key={ticket.id}
-            id={ticket.id}
-            title={ticket.title}
-            tag={ticket.tag}
-            avatarUrl={avatarUrl}
-          />
-        ))}
+        {tickets.map(
+          (ticket) =>
+            ticket && (
+              <Card
+                key={ticket.id}
+                id={ticket.id}
+                title={ticket.title}
+                tags={ticket.tag}
+                avatarUrl={avatarUrl}
+              />
+            )
+        )}
       </div>
     </div>
   );

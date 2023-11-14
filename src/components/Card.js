@@ -19,12 +19,13 @@ const Card = ({ id, title, tags, avatarUrl }) => {
           {tag}
         </div> */}
         <div>
-          {tags.map((tag, index) => (
-            <div key={index} className='card__tag'>
-              <span className='card__tag-dot'></span>
-              {tag}
-            </div>
-          ))}
+          {tags &&
+            tags.map((tag, index) => (
+              <div key={index} className='card__tag'>
+                <span className='card__tag-dot'></span>
+                {tag}
+              </div>
+            ))}
         </div>
       </div>
     </div>
