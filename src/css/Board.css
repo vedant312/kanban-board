@@ -1,0 +1,35 @@
+.board {
+  min-width: 290px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-left: 30px;
+  padding: 10px;
+}
+
+.board_top {
+  display: flex;
+}
+
+.board_top_title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.board_top_title span {
+  color: gray;
+}
+
+.board_top_title svg {
+  margin-right: 5px; /* Adjust spacing between icon and title */
+}
+
+.board_cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-bottom: 10px;
+}
