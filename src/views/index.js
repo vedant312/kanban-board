@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import './css/App.css';
-import Board from './components/Board';
-import { tickets, users } from './content';
+import '../css/App.css';
+import Board from '../components/Board';
+import { tickets, users } from '../content';
 import { ChevronDown } from 'react-feather';
 
 function App() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [grouping, setGrouping] = useState('Status');
   const [ordering, setOrdering] = useState('Priority');
-  // const statusCategories = ['Backlog', 'Todo', 'In progress', 'Done', 'Canceled'];
 
   // Helper function to get unique values for a given key
   const getUniqueValues = (data, key) => [
