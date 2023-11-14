@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+import './css/App.css';
 import Board from './components/Board';
 import { tickets, users } from './content';
 import { ChevronDown } from 'react-feather';
