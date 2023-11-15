@@ -91,7 +91,7 @@
 /* Dropdown section */
 .dropdown-section {
   display: flex; /* Use flexbox for alignment */
-  justify-content: start; /* Space between label and select */
+  justify-content: flex-start; /* Space between label and select */
   align-items: center; /* Align items vertically */
   padding: 10px;
   border-bottom: 1px solid #efefef; /* Light grey border for separating sections */

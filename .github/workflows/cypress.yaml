@@ -17,5 +17,3 @@ jobs:
           start: npm run start
           parallel: true
           component: true
-        env:
-          CI: false
