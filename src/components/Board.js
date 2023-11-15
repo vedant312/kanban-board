@@ -18,7 +18,7 @@ function Board({ tickets, users, grouping, sorting }) {
       });
     } else if (grouping === 'Priority') {
       const priorityNames = ['No Priority', 'Urgent', 'High', 'Medium', 'Low'];
-      const uniquePriorities = getUniqueValues(tickets, 'priority');
+      const uniquePriorities = [0, 1, 2, 3, 4];
       uniquePriorities.forEach((priority) => {
         const priorityName = priorityNames[priority];
         groups[priorityName] = tickets.filter(
