@@ -20,6 +20,8 @@ This is a kanban board app built with React. It is a simple app that allows you 
 
 ## Components Structuring
 
+![Component](./.github/images/components.jpeg)
+
 ## Deployment
 
 Deployed on gh-pages. Available at [https://kanban.vedantdangi.me/](https://kanban.vedantdangi.me/)
