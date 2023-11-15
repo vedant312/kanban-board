@@ -1,41 +1,36 @@
 import React from 'react';
-import { MoreHorizontal } from 'react-feather';
 import Tag from './Tag';
 import '../css/Card.css'; // Make sure to create and import the CSS file
+import { statusIcons, priorityIcons } from './icon';
 
-const Card = ({ ticket, users }) => {
+const Card = ({ grouping, ticket, users }) => {
   const tags = ticket.tag || [];
+  console.log(ticket.status);
+  const showStatusIcon = grouping !== 'Status';
+  const showPriorityIcon = grouping !== 'Priority';
+  const showImage = grouping !== 'User';
 
-  const findUserName = (userId) => {
-    const user = users.find((u) => u.id === userId);
-    return user ? user.name : 'Unknown';
-  };
+  // Generate the user image URL based on the user ID
+  const userId = ticket.userId ? ticket.userId.match(/\d+/)[0] : 'default'; // Assuming the user ID is available in the ticket data
+  const randomNum = 1000 * Number(userId);
+  const userImageUrl = `https://avatars.githubusercontent.com/u/${randomNum}?v=4`;
 
   return (
     <div className='card'>
       <div className='card__header'>
-        <span className='card__id'>
-          Assigned to: {findUserName(ticket.userId)}
-        </span>
-        {/* <img src={avatarUrl} alt='Avatar' className='card__avatar' /> */}
+        <span className='card__id'>{ticket.id}</span>
+        {showImage && (
+          <img src={userImageUrl} alt='Avatar' className='card__avatar' />
+        )}
       </div>
-      <h2 className='card__title'>{ticket.title}</h2>
+      <h2 className='card__title'>
+        {showStatusIcon && statusIcons[ticket.status]} {ticket.title}
+      </h2>
       <div className='card__footer'>
         <div className='card__feature-request'>
-          <MoreHorizontal color='#808080' size='20' />
+          {showPriorityIcon && priorityIcons[ticket.priority]}
         </div>
-        {/* <div className="card__feature-request">
-          <div className="card__feature-icon"></div>
-          {tag}
-        </div> */}
-        <div>
-          {/* {tags &&
-            tags.map((tag, index) => (
-              <div key={index} className='card__tag'>
-                <span className='card__tag-dot'></span>
-                {tag}
-              </div>
-            ))} */}
+        <div className='card__tag'>
           <Tag tags={tags} />
         </div>
       </div>
