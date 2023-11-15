@@ -1,40 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/App.css';
 import Board from '../components/Board';
-import { tickets, users } from '../content';
 import { ChevronDown } from 'react-feather';
 
 function App() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [grouping, setGrouping] = useState('Status');
   const [ordering, setOrdering] = useState('Priority');
+  const [tickets, setTickets] = useState([]); // State to store tickets
+  const [users, setUsers] = useState([]); // State to store users
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          'https://api.quicksell.co/v1/internal/frontend-assignment'
+        );
+        const data = await response.json();
+        setTickets(data.tickets);
+        setUsers(data.users);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleChangeOrdering = (e) => setOrdering(e?.target?.value);
 
   // Helper function to get unique values for a given key
   const getUniqueValues = (data, key) => [
     ...new Set(data.map((item) => item[key])),
   ];
 
-  // Function to group tickets by status
-  const ticketsByStatus = (status) =>
-    tickets.filter((ticket) => ticket.status === status);
-
-  // Function to group tickets by user
-  const ticketsByUser = (userId) =>
-    tickets.filter((ticket) => ticket.userId === userId);
-
-  // Function to group tickets by priority
-  const ticketsByPriority = (priority) =>
-    tickets.filter((ticket) => ticket.priority === priority);
-
   // Sorting helper functions
   const sortByPriority = (a, b) => b.priority - a.priority;
   const sortByTitle = (a, b) => a.title.localeCompare(b.title);
-
-  // Function to get user name by ID
-  const getUserName = (userId) => {
-    const user = users.find((u) => u.id === userId);
-    return user ? user.name : 'Unknown';
-  };
 
   // Function to apply sorting based on the selected ordering
   const applySorting = (tickets) => {
@@ -110,10 +112,7 @@ function App() {
               <div className='dropdown-section'>
                 <span>Ordering</span>
                 <div className='select-container'>
-                  <select
-                    value={ordering}
-                    onChange={(e) => setOrdering(e.target.value)}
-                  >
+                  <select value={ordering} onChange={handleChangeOrdering}>
                     <option value='Priority'>Priority</option>
                     <option value='Title'>Title</option>
                   </select>
@@ -131,6 +130,7 @@ function App() {
               key={category}
               status={category}
               tickets={groupFunction(category)}
+              users={users}
             />
           ))}
         </div>

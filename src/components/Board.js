@@ -2,10 +2,9 @@ import React from 'react';
 import { MoreHorizontal, Plus } from 'react-feather';
 import Card from './Card';
 import '../css/Board.css';
-import { users } from '../content';
 import { statusIcons, priorityIcons, userIcons } from './icon';
 
-function Board({ status, tickets }) {
+function Board({ status, tickets, users }) {
   const getUser = (userId) => {
     const user = users.find((u) => u.id === userId);
     return user ? user.name : 'Unknown';
