@@ -1,5 +1,3 @@
-// Tag.js
-
 import React from 'react';
 
 function Tag({ tags }) {
