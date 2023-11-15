@@ -47,7 +47,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Author
 
-- [Vedant Dangi](https://vendantdangi.me/)
+- [Vedant Dangi](https://vedantdangi.me/)
 - Final year student at IIT Kanpur
 - Roll no: 201101
 - Email: [vedantd20@iitk.ac.in](mailto:vedantd20@iitk.ac.in])
