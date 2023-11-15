@@ -16,6 +16,7 @@ This is a kanban board app built with React. It is a simple app that allows you 
 - Async sorting tasks also accelerate the rendering of the app.
 - UI design is as close to the given design as possible.
 - React icons are used for icons.
+- Avatars are used from github user contents
 
 ## Components Structuring
 
