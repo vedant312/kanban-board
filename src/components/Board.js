@@ -17,7 +17,7 @@ function Board({ tickets, users, grouping, sorting }) {
         );
       });
     } else if (grouping === 'Priority') {
-      const priorityNames = ['No Priority', 'Low', 'Medium', 'High', 'Urgent'];
+      const priorityNames = ['No Priority', 'Urgent', 'High', 'Medium', 'Low'];
       const uniquePriorities = getUniqueValues(tickets, 'priority');
       uniquePriorities.forEach((priority) => {
         const priorityName = priorityNames[priority];
@@ -47,6 +47,7 @@ function Board({ tickets, users, grouping, sorting }) {
           tickets={groupedTickets}
           sorting={sorting}
           users={users}
+          grouping={grouping}
         />
       ))}
     </div>
