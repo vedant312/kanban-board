@@ -27,6 +27,7 @@
   position: sticky;
   top: 0;
   background-color: #fff;
+  z-index: 5;
 }
 
 .app_outer {
@@ -40,6 +41,7 @@
 .app_boards {
   min-width: fit-content;
   display: flex;
+  flex-direction: row;
   gap: 10px;
 }
 
