@@ -55,15 +55,13 @@
 
 .card__feature-request {
   background-color: #ffffff; /* Light grey background */
-  border: 1px solid #ced4da; /* Grey border */
-  border-radius: 5px; /* Rounded edges */
   color: #495057; /* Dark grey text */
-  padding: 7.4px 8px; /* Vertical and horizontal padding */
+  padding: 5px 0px; /* Vertical and horizontal padding */
   font-size: 1.275rem; /* Font size */
   display: flex;
   align-items: center;
   gap: 8px; /* Spacing between icon and text */
-  margin: 3px;
+  margin-right: 10px;
 }
 
 .card__tag {
