@@ -1,11 +1,11 @@
-// Column.js
-
 import React from 'react';
 import Card from './Card';
 import { MoreHorizontal, Plus } from 'react-feather';
 import '../css/Board.css';
+import { statusIcons, priorityIcons } from './icon'; // Import the statusIcons and priorityIcons
 
-function Column({ group, tickets, sorting, users }) {
+
+function Column({ group, tickets, sorting, users, grouping }) {
   // Sorting logic
   const sortTickets = (tickets) => {
     if (sorting === 'Priority') {
@@ -15,6 +15,7 @@ function Column({ group, tickets, sorting, users }) {
       return [...tickets].sort((a, b) => a.title.localeCompare(b.title));
     }
   };
+  console.log(group);
 
   const sortedTickets = sortTickets(tickets);
 
@@ -22,7 +23,7 @@ function Column({ group, tickets, sorting, users }) {
     <div className='board'>
       <div className='board_top'>
         <p className='board_top_title'>
-          {group}
+        {statusIcons[group] && statusIcons[group]} {priorityIcons[group] && priorityIcons[group]} {group}
           <span>{tickets.length}</span>
         </p>
         <p>
@@ -32,7 +33,12 @@ function Column({ group, tickets, sorting, users }) {
       </div>
       <div className='board_cards'>
         {sortedTickets.map((ticket) => (
-          <Card key={ticket.id} ticket={ticket} users={users} />
+          <Card
+            key={ticket.id}
+            grouping={grouping}
+            ticket={ticket}
+            users={users}
+          />
         ))}
       </div>
     </div>
