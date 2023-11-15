@@ -3,9 +3,6 @@ import Column from './Column';
 import '../css/Board.css';
 
 function Board({ tickets, users, grouping, sorting }) {
-  const getUniqueValues = (data, key) => [
-    ...new Set(data.map((item) => item[key])),
-  ];
 
   const groupTickets = () => {
     const groups = {};
