@@ -6,10 +6,15 @@ import { ChevronDown } from 'react-feather';
 function App() {
   const [data, setData] = useState({ tickets: [], users: [] });
   const [showDropdown, setShowDropdown] = useState(false);
-  const [grouping, setGrouping] = useState('Status');
-  const [ordering, setOrdering] = useState('Priority');
-  // const [tickets, setTickets] = useState([]); // State to store tickets
-  // const [users, setUsers] = useState([]); // State to store users
+  const [grouping, setGrouping] = useState(localStorage.getItem('grouping') || 'Status');
+  const [ordering, setOrdering] = useState(localStorage.getItem('ordering') || 'Priority');
+
+  useEffect(() => {
+    // Save the current grouping and sorting preferences to localStorage
+    localStorage.setItem('grouping', grouping);
+    localStorage.setItem('ordering', ordering);
+  }, [grouping, ordering]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
