@@ -1,63 +1,54 @@
 import React from 'react';
-import { MoreHorizontal, Plus } from 'react-feather';
-import Card from './Card';
+import Column from './Column';
 import '../css/Board.css';
-import { statusIcons, priorityIcons, userIcons } from './icon';
 
-function Board({ status, tickets, users }) {
-  const getUser = (userId) => {
-    const user = users.find((u) => u.id === userId);
-    return user ? user.name : 'Unknown';
-  };
+function Board({ tickets, users, grouping, sorting }) {
+  const getUniqueValues = (data, key) => [
+    ...new Set(data.map((item) => item[key])),
+  ];
 
-  const getTitle = () => {
-    let icon;
-    let titleText;
-    if (typeof status === 'number') {
-      // Assuming you want to convert priority numbers to priority names
+  const groupTickets = () => {
+    const groups = {};
+
+    if (grouping === 'User') {
+      users.forEach((user) => {
+        groups[user.name] = tickets.filter(
+          (ticket) => ticket.userId === user.id
+        );
+      });
+    } else if (grouping === 'Priority') {
       const priorityNames = ['No Priority', 'Low', 'Medium', 'High', 'Urgent'];
-      titleText = `${priorityNames[status]}`;
-      icon = priorityIcons[status];
-    } else if (typeof status === 'string' && status.startsWith('usr-')) {
-      titleText = getUser(status);
-      icon = userIcons[status];
+      const uniquePriorities = getUniqueValues(tickets, 'priority');
+      uniquePriorities.forEach((priority) => {
+        const priorityName = priorityNames[priority];
+        groups[priorityName] = tickets.filter(
+          (ticket) => ticket.priority === priority
+        );
+      });
     } else {
-      titleText = status;
-      icon = statusIcons[status];
+      // Default to 'Status'
+      const statuses = ['Backlog', 'Todo', 'In progress', 'Done', 'Canceled'];
+      statuses.forEach((status) => {
+        groups[status] = tickets.filter((ticket) => ticket.status === status);
+      });
     }
 
-    return { icon, titleText };
+    return groups;
   };
 
-  const avatarUrl = 'https://avatars.githubusercontent.com/u/82332572?v=4';
-  const { icon, titleText } = getTitle();
+  const groupedData = groupTickets();
 
   return (
-    <div className='board'>
-      <div className='board_top'>
-        <p className='board_top_title'>
-          {icon}
-          {titleText} <span>{tickets.length}</span>
-        </p>
-        <p>
-          <Plus color='#808080' size='20' />
-          <MoreHorizontal color='#808080' size='20' />
-        </p>
-      </div>
-      <div className='board_cards'>
-        {tickets.map(
-          (ticket) =>
-            ticket && (
-              <Card
-                key={ticket.id}
-                id={ticket.id}
-                title={ticket.title}
-                tags={ticket.tag}
-                avatarUrl={avatarUrl}
-              />
-            )
-        )}
-      </div>
+    <div className='board-container'>
+      {Object.entries(groupedData).map(([group, groupedTickets]) => (
+        <Column
+          key={group}
+          group={group}
+          tickets={groupedTickets}
+          sorting={sorting}
+          users={users}
+        />
+      ))}
     </div>
   );
 }
