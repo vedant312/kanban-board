@@ -4,84 +4,38 @@ import Board from '../components/Board';
 import { ChevronDown } from 'react-feather';
 
 function App() {
+  const [data, setData] = useState({ tickets: [], users: [] });
   const [showDropdown, setShowDropdown] = useState(false);
   const [grouping, setGrouping] = useState('Status');
   const [ordering, setOrdering] = useState('Priority');
-  const [tickets, setTickets] = useState([]); // State to store tickets
-  const [users, setUsers] = useState([]); // State to store users
+  // const [tickets, setTickets] = useState([]); // State to store tickets
+  // const [users, setUsers] = useState([]); // State to store users
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          'https://api.quicksell.co/v1/internal/frontend-assignment'
-        );
-        const data = await response.json();
-        setTickets(data.tickets);
-        setUsers(data.users);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
+    setIsLoading(true);
+    fetch('https://api.quicksell.co/v1/internal/frontend-assignment')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => setData(data))
+      .catch((e) => setError(e.message))
+      .finally(() => setIsLoading(false));
   }, []);
 
-  const handleChangeOrdering = (e) => setOrdering(e?.target?.value);
-
-  // Helper function to get unique values for a given key
-  const getUniqueValues = (data, key) => [
-    ...new Set(data.map((item) => item[key])),
-  ];
-
-  // Sorting helper functions
-  const sortByPriority = (a, b) => b.priority - a.priority;
-  const sortByTitle = (a, b) => a.title.localeCompare(b.title);
-
-  // Function to apply sorting based on the selected ordering
-  const applySorting = (tickets) => {
-    if (ordering === 'Priority') {
-      return tickets.sort(sortByPriority);
-    } else if (ordering === 'Title') {
-      return tickets.sort(sortByTitle);
-    }
-    return tickets;
-  };
-
-  // Determine which grouping to use
-  let categories;
-  let groupFunction;
-  switch (grouping) {
-    case 'User':
-      categories = users.map((u) => u.name).sort();
-      groupFunction = (userName) => {
-        const userId = users.find((u) => u.name === userName)?.id;
-        let filteredTickets = tickets.filter(
-          (ticket) => ticket.userId === userId
-        );
-        return applySorting(filteredTickets);
-      };
-      break;
-    case 'Priority':
-      categories = getUniqueValues(tickets, 'priority').sort((a, b) => a - b);
-      groupFunction = (priorityLevel) => {
-        let filteredTickets = tickets.filter(
-          (ticket) => ticket.priority === priorityLevel
-        );
-        return applySorting(filteredTickets);
-      };
-      break;
-    default: // 'Status'
-      categories = ['Backlog', 'Todo', 'In progress', 'Done', 'Canceled'];
-      // groupFunction = ticketsByStatus;
-      groupFunction = (status) => {
-        let filteredTickets = tickets.filter(
-          (ticket) => ticket.status === status
-        );
-        return applySorting(filteredTickets);
-      };
-      break;
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  const handleChangeOrdering = (e) => setOrdering(e?.target?.value);
 
   return (
     <div className='app'>
@@ -125,14 +79,12 @@ function App() {
       </div>
       <div className='app_outer'>
         <div className='app_boards'>
-          {categories.map((category) => (
-            <Board
-              key={category}
-              status={category}
-              tickets={groupFunction(category)}
-              users={users}
-            />
-          ))}
+          <Board
+            tickets={data.tickets}
+            users={data.users}
+            grouping={grouping}
+            sorting={ordering}
+          />
         </div>
       </div>
     </div>
