@@ -6,6 +6,10 @@ This application was built as a part of a recruitment assingment for QuickSell.
 
 This is a kanban board app built with React. It is a simple app that allows you to group and sort tasks into columns. It is built in pure react without any external css libraries with love.
 
+## Deployment
+
+Deployed on gh-pages. Available at [https://kanban.vedantdangi.me/](https://kanban.vedantdangi.me/)
+
 ## Key Points
 
 - Built in pure react without any external css libraries.
@@ -22,10 +26,6 @@ This is a kanban board app built with React. It is a simple app that allows you 
 
 ![Component](./.github/images/components.jpeg)
 
-## Deployment
-
-Deployed on gh-pages. Available at [https://kanban.vedantdangi.me/](https://kanban.vedantdangi.me/)
-
 ## Setup for local development
 
 ### Prerequisites
@@ -40,6 +40,10 @@ Deployed on gh-pages. Available at [https://kanban.vedantdangi.me/](https://kanb
 
 Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+### Tests
+
+- Cypress Component testing
 
 ## Author
 
